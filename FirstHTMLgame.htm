@@ -1,0 +1,125 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<style>
+.tab button {
+  background-color: inherit;
+  float: left;
+  border: 5px solid black;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
+}
+.tab button:hover {
+  background-color: #ddd;
+}
+.tab button.active {
+  background-color: #ccc;
+}
+.tabcontent {
+  display: none;
+  padding: 6px 12px;
+}
+.gamecontent {
+  position:relative; 
+  top:75px; 
+  left:0px; 
+  margin-left:200px; 
+  margin-right:0px;
+}
+.red {
+  border: 5px solid red;
+<!-- border-bottom: none;-->
+}
+<!-- Yes, I copy-pasted that. Deal. With. It. -->
+<title></title>
+</style>
+</head>
+<body>
+<title>Idle Colors</title>
+<h1>Idle Colors</h1>
+<div class="tab">
+  <button class="tablinks" onclick="openTab(event, 'Game')">Game</button>
+  <button class="tablinks" onclick="openTab(event, 'Credits')">Credits</button>
+  <!-- <button class="tablinks" onclick="openCity(event, 'Unused')">Tokyo</button> -->
+</div>
+<script>
+//Red Generator Information
+//Define Variables
+  var money;
+  var generatorsRed;
+  var generatorRedcost;
+  var generatorRedtrueCost;
+  var moneypergeneratorRed;
+  var moneyshown;
+  money = 10;
+  generatorsRed = 0;
+  generatorRedtrueCost = 10;
+  moneypergeneratorRed = 1; 
+//Repeat Money Updating Function
+  setInterval(update_money_generated,50);
+//Process Buy Request from Button 
+function GeneratorRedBuyRequest() {
+  generatorRedcost = Math.round(generatorRedtrueCost);
+  if (money > generatorRedcost - 1) {
+//Buying Money and Product change
+    money = money - generatorRedtrueCost;
+    generatorsRed ++;
+    if (Math.round(generatorsRed / 10) == generatorsRed / 10) {
+      red_multiple();
+    }
+    generatorRedcost = Math.round(generatorRedtrueCost);
+    moneyshown = Math.round(money);
+//Update variables
+    document.getElementById("GeneratorsRed").innerHTML = "You have: " + generatorsRed + " red color printers.";
+    document.getElementById("CostI").innerHTML = "Costs: " + generatorRedcost + " color";
+    document.getElementById("Money").innerHTML = "You have: " + moneyshown + " color.";
+  } 
+}
+//Update money
+function update_money_generated() {
+  money = money + (generatorsRed * moneypergeneratorRed / 20);
+  moneyshown = Math.round(money);
+  document.getElementById("Money").innerHTML = "You have: " + moneyshown + " color.";
+//Cost Scaling
+}
+//Tabs
+function openTab(evt, tabnumber) { 
+//Initialize variables
+  var i, tabcontent, tablinks;
+//Hide all content relating to tabs
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+  // Get all elements with class="tablinks" and remove the class "active"
+  tablinks = document.getElementsByClassName("tablinks");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
+  // Show the current tab, and add an "active" class to the button that opened the tab
+  document.getElementById(tabnumber).style.display = "block";
+  evt.currentTarget.className += " active";
+}
+function red_multiple() {
+  generatorRedtrueCost = generatorRedtrueCost * 100;
+  moneypergeneratorRed = moneypergeneratorRed * 2;
+}
+</script>
+<div id="Game" class="tabcontent">
+<div class="gamecontent">
+<div class="red">
+<button onclick="GeneratorRedBuyRequest()">Buy a red color printer.</button>
+<p id="GeneratorsRed"></p>
+<p id="CostI"></p>
+<p id="Money"></p>
+</div>
+<a href="https://ivark.github.io" target="_blank">Antimatter Dimensions</a>
+</div>
+</div>
+<div id="Credits" class="tabcontent">
+<p style="font:Arial;size:200%"><b>Made by: Harry</b></p>
+</div>
+</body>
+</html>
